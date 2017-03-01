@@ -65,6 +65,10 @@
                                                      document.getElementById('logout-form').submit();">
                                             Logout
                                         </a>
+                                        <!-- TODO: hide link after recive token -->
+                                        <a href="{{ route('vk') }}">
+                                            Vk
+                                        </a>
 
                                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                             {{ csrf_field() }}
