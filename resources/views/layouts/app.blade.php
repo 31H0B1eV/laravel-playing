@@ -66,14 +66,14 @@
                                             Logout
                                         </a>
 
-                                        @if(!isset($user))
-                                        <a href="{{ route('vk_authorize') }}">
-                                            Add Vkontakte
-                                        </a>
+                                        @if(isset($user) && !$user->vkontakte_token)
+                                            <a href="{{ route('social.login', ['vkontakte']) }}">
+                                                Add Vkontakte
+                                            </a>
                                         @else                                        
-                                        <a href="{{ route('vk_forget') }}">
-                                            Remove Vkontakte
-                                        </a>
+                                            <a href="{{ route('social.forget', ['vkontakte']) }}">
+                                                Remove Vkontakte
+                                            </a>
                                         @endif
 
                                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

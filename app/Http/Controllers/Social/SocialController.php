@@ -8,16 +8,13 @@ use App\User;
 use Auth;
 use Socialite;
 
-class VkController extends Controller
+class SocialController extends Controller
 {
-    public function login()
-    {
-        return Socialite::with('vkontakte')->scopes(['email'])->redirect();
-    }
+    protected $defaultPassword = 'secret';
 
-    public function oauth2()
-    {        
-        return Socialite::with('vkontakte')
+    public function login($provider)
+    {
+        return Socialite::with($provider)
             ->scopes([
                  'friends',
                  'photos',
@@ -36,15 +33,14 @@ class VkController extends Controller
                  'stats',
                  'email',
                  'market',
-             ])
-            ->redirect();
+             ])->redirect();
     }
 
-    public function redirect()
+    public function redirect($provider)
     {
-        $user = Socialite::with('vkontakte')->user();
+        $user = Socialite::with($provider)->user();
 
-        $authUser = $this->findOrCreateUser($user);
+        $authUser = $this->findOrCreateUser($user, $provider);
 
         if(get_class($authUser) == 'App\User') {
             Auth::login($authUser, true);
@@ -54,14 +50,14 @@ class VkController extends Controller
         return redirect('register');
     }
 
-    public function findOrCreateUser($user)
+    public function findOrCreateUser($user, $provider)
     {        
         $existingUser = User::where('email', '=', $user->email)->first();
         if(!$user->email && !Auth::user()) return;
 
         if(Auth::user()) {
             $authUser = User::where('id', '=', Auth::user()->id)->first();
-            $authUser->vk_token = $user->token;
+            $authUser[$provider . '_token'] = $user->token;
             $authUser->save();
 
             return $authUser;
@@ -73,15 +69,15 @@ class VkController extends Controller
             'name'        => $user->name ?? '',
             'username'    => $user->email,
             'email'       => $user->email,
-            'password'    => bcrypt('secret'),
-            'vk_token'    => $user->token,
+            'password'    => bcrypt($this->defaultPassword),
+            $provider . '_token'    => $user->token,
         ]);
     }
 
-    public function forget()
+    public function forget($provider)
     {
         $user = User::where('id', '=', Auth::user()->id)->first();
-        $user->vk_token = '';
+        $user[$provider . '_token'] = '';
         $user->save();
 
         return redirect()->route('home');

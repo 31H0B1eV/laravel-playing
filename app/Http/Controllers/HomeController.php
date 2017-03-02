@@ -23,7 +23,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        if(\Auth::user()->vk_token) {
+        if(\Auth::user()) {
             return view('home', ['user' => \Auth::user()]);
         }
 

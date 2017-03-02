@@ -14,7 +14,7 @@
                         <ul>
                             <li>Full name: {{ $user->name }}</li>
                             <li>Login: {{ $user->username }}</li>
-                            <li>Vk token: {{ $user->vk_token }}</li>
+                            <li>Vk token: {{ $user->vkontakte_token }}</li>
                         </ul>
                     @endif
                 </div>

@@ -19,7 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('username')->unique()->nullable();
             $table->string('email')->unique();
             $table->string('password')->nullable();
-            $table->string('vk_token')->nullable();
+            $table->string('vkontakte_token')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

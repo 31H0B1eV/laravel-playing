@@ -66,7 +66,7 @@
                         <span class="fa fa-vk"></span>
                     </a> --}}
                     <div class="col-md-4">
-                        <a class="btn btn-block btn-social btn-vk" href="{{ route('vk_login') }}">
+                        <a class="btn btn-block btn-social btn-vk" href="{{ route('social.login', ['vkontakte']) }}">
                             <span class="fa fa-vk"></span> Sign in with VK
                         </a>
                     </div>
