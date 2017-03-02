@@ -45,14 +45,19 @@ class VkController extends Controller
         $user = Socialite::with('vkontakte')->user();
 
         $authUser = $this->findOrCreateUser($user);
-        Auth::login($authUser, true);
 
+        if(get_class($authUser) == 'App\User') {
+            Auth::login($authUser, true);
         return redirect()->route('home');
+        }
+
+        return redirect('register');
     }
 
     public function findOrCreateUser($user)
-    {
+    {        
         $existingUser = User::where('email', '=', $user->email)->first();
+        if(!$user->email && !Auth::user()) return;
 
         if(Auth::user()) {
             $authUser = User::where('id', '=', Auth::user()->id)->first();
@@ -64,7 +69,6 @@ class VkController extends Controller
             return $existingUser;
         }        
 
-        if(!$user->email) return redirect('register');
         return User::create([
             'name'        => $user->name ?? '',
             'username'    => $user->email,
