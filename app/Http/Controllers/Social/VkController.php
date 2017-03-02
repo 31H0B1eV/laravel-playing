@@ -48,7 +48,7 @@ class VkController extends Controller
 
         if(get_class($authUser) == 'App\User') {
             Auth::login($authUser, true);
-        return redirect()->route('home');
+            return redirect()->route('home');
         }
 
         return redirect('register');
