@@ -65,10 +65,16 @@
                                                      document.getElementById('logout-form').submit();">
                                             Logout
                                         </a>
-                                        <!-- TODO: hide link after recive token -->
+
+                                        @if(!isset($user))
                                         <a href="{{ route('vk') }}">
                                             Vk
                                         </a>
+                                        @else                                        
+                                        <a href="{{ route('vk_forget') }}">
+                                            Remove Vk connection
+                                        </a>
+                                        @endif
 
                                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                             {{ csrf_field() }}
