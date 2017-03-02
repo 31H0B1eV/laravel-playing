@@ -67,7 +67,7 @@
                                         </a>
 
                                         @if(!isset($user))
-                                        <a href="{{ route('vk') }}">
+                                        <a href="{{ route('vk_authorize') }}">
                                             Add Vkontakte
                                         </a>
                                         @else                                        

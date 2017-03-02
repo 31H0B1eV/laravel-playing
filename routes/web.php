@@ -4,8 +4,8 @@ Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
 
-Route::group(['prefix' => 'service'], function() {
-    Route::get('/authorize_vk', 'HomeController@authorize_vk')->name('vk');
-    Route::get('/forget_vk', 'HomeController@forget')->name('vk_forget');
-    Route::get('/redirect', 'HomeController@redirect')->name('redirect');
+Route::group(['namespace' => 'Social', 'prefix' => 'service'], function() {
+    Route::get('/avk', 'VkController@oauth2')->name('vk_authorize');
+    Route::get('/fvk', 'VkController@forget')->name('vk_forget');
+    Route::get('/rvk', 'VkController@redirect')->name('vk_redirect');
 });
