@@ -60,6 +60,16 @@
                             </div>
                         </div>
                     </form>
+                    <hr>
+
+                    {{-- <a class="btn btn-social-icon btn-vk">
+                        <span class="fa fa-vk"></span>
+                    </a> --}}
+                    <div class="col-md-4">
+                        <a class="btn btn-block btn-social btn-vk">
+                            <span class="fa fa-vk"></span> Sign in with VK
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
