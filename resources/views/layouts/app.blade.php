@@ -68,11 +68,11 @@
 
                                         @if(!isset($user))
                                         <a href="{{ route('vk') }}">
-                                            Vk
+                                            Add Vkontakte
                                         </a>
                                         @else                                        
                                         <a href="{{ route('vk_forget') }}">
-                                            Remove Vk connection
+                                            Remove Vkontakte
                                         </a>
                                         @endif
 
