@@ -23,6 +23,15 @@ class HomeController extends Controller
      */
     public function index()
     {
+        if(\Auth::user()) {
+            $providers = array();
+            foreach (\Auth::user()->social as $provider) {
+                array_push($providers, $provider->provider_name);
+            }
+
+            return view('home', compact('providers'));
+        }
+
         return view('home');
     }
 }

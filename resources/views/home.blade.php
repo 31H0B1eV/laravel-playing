@@ -10,8 +10,10 @@
                 <div class="panel-body">
                     You are logged in!
                     <hr>
-                    @if(\Auth::user())
-                        <profile></profile>
+                    @if(\Auth::check())
+                        <profile
+                            :user="{{ \Auth::user()->first() }}"
+                            :social="{{ json_encode($providers) }}" ></profile>
                     @endif
                 </div>
             </div>

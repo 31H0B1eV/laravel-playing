@@ -12066,10 +12066,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = {
+
+    props: {
+        user: Object,
+        social: Array
+    },
     mounted: function mounted() {
-        console.log('Component mounted.');
+        // console.log(this.user, this.social);
     }
 };
 
@@ -31693,16 +31707,16 @@ module.exports = function normalizeComponent (
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _vm._m(0)
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "panel panel-default"
   }, [_c('div', {
     staticClass: "panel-heading"
   }, [_vm._v("Profile Component")]), _vm._v(" "), _c('div', {
     staticClass: "panel-body"
-  }, [_vm._v("\n        I'm an profile component!\n    ")])])
-}]}
+  }, [_c('ul', [_c('li', [_vm._v(_vm._s(_vm.user.name))]), _vm._v(" "), _c('li', [_vm._v(_vm._s(_vm.user.email))]), _vm._v(" "), _c('h5', [_vm._v("Linked providers: ")]), _vm._v(" "), _c('ul', _vm._l((_vm.social), function(provider) {
+    return _c('li', [_vm._v("\n                    " + _vm._s(provider) + "\n                ")])
+  }))])])])
+},staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
