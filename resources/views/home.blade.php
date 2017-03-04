@@ -10,19 +10,8 @@
                 <div class="panel-body">
                     You are logged in!
                     <hr>
-                    @if(isset($user))
-                        <ul>
-                            <li>Full name: {{ $user->name }}</li>
-                            <li>Email: {{ $user->email }}</li>
-                            <li>
-                                <ul>
-                                    <li>{{ $user->social->first()->user_id }}</li>
-                                    <li>{{ $user->social->first()->provider_name }}</li>
-                                    <li>{{ $user->social->first()->provider_user_id }}</li>
-                                    <li>{{ $user->social->first()->provider_token }}</li>
-                                </ul>
-                            </li>
-                        </ul>
+                    @if(\Auth::user())
+                        <profile></profile>
                     @endif
                 </div>
             </div>
