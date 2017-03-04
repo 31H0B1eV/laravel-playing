@@ -12075,12 +12075,71 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = {
-
     props: {
         user: Object,
         social: Array
+    },
+    data: function data() {
+        return {
+            name: this.user.name,
+            email: this.user.email,
+            login: this.user.username,
+            edit: {
+                name: false,
+                email: false,
+                login: false
+            }
+        };
+    },
+
+    methods: {
+        editClick: function editClick(name) {
+            this.edit[name] = !this.edit[name];
+        }
     },
     mounted: function mounted() {
         // console.log(this.user, this.social);
@@ -31708,15 +31767,214 @@ module.exports = function normalizeComponent (
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
-    staticClass: "panel panel-default"
+    staticClass: "row"
   }, [_c('div', {
-    staticClass: "panel-heading"
-  }, [_vm._v("Profile Component")]), _vm._v(" "), _c('div', {
-    staticClass: "panel-body"
-  }, [_c('ul', [_c('li', [_vm._v(_vm._s(_vm.user.name))]), _vm._v(" "), _c('li', [_vm._v(_vm._s(_vm.user.email))]), _vm._v(" "), _c('h5', [_vm._v("Linked providers: ")]), _vm._v(" "), _c('ul', _vm._l((_vm.social), function(provider) {
-    return _c('li', [_vm._v("\n                    " + _vm._s(provider) + "\n                ")])
-  }))])])])
-},staticRenderFns: []}
+    staticClass: "col-md-12"
+  }, [_vm._m(0), _vm._v(" "), _c('div', {
+    staticClass: "col-md-3"
+  }, [_c('h4', [_vm._v("Full name:")]), _vm._v(" "), _c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.edit.name),
+      expression: "edit.name"
+    }],
+    staticClass: "edit--block"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.name),
+      expression: "name"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text"
+    },
+    domProps: {
+      "value": (_vm.name)
+    },
+    on: {
+      "keyup": function($event) {
+        if (_vm._k($event.keyCode, "enter", 13)) { return null; }
+        _vm.editClick('name')
+      },
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.name = $event.target.value
+      }
+    }
+  }), _vm._v(" "), _c('i', {
+    staticClass: "fa fa-times",
+    attrs: {
+      "aria-hidden": "true"
+    },
+    on: {
+      "click": function($event) {
+        _vm.editClick('name')
+      }
+    }
+  })]), _vm._v(" "), _c('p', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (!_vm.edit.name),
+      expression: "!edit.name"
+    }]
+  }, [_vm._v(_vm._s(_vm.name) + "\n                "), _c('i', {
+    staticClass: "fa fa-pencil",
+    attrs: {
+      "aria-hidden": "true"
+    },
+    on: {
+      "click": function($event) {
+        _vm.editClick('name')
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-3"
+  }, [_c('h4', [_vm._v("Email")]), _vm._v(" "), _c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.edit.email),
+      expression: "edit.email"
+    }],
+    staticClass: "edit--block"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.email),
+      expression: "email"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text"
+    },
+    domProps: {
+      "value": (_vm.email)
+    },
+    on: {
+      "keyup": function($event) {
+        if (_vm._k($event.keyCode, "enter", 13)) { return null; }
+        _vm.editClick('email')
+      },
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.email = $event.target.value
+      }
+    }
+  }), _vm._v(" "), _c('i', {
+    staticClass: "fa fa-times",
+    attrs: {
+      "aria-hidden": "true"
+    },
+    on: {
+      "click": function($event) {
+        _vm.editClick('email')
+      }
+    }
+  })]), _vm._v(" "), _c('p', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (!_vm.edit.email),
+      expression: "!edit.email"
+    }]
+  }, [_vm._v(_vm._s(_vm.email) + "\n                "), _c('i', {
+    staticClass: "fa fa-pencil",
+    attrs: {
+      "aria-hidden": "true"
+    },
+    on: {
+      "click": function($event) {
+        _vm.editClick('email')
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-3"
+  }, [_c('h4', [_vm._v("Login")]), _vm._v(" "), _c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.edit.login),
+      expression: "edit.login"
+    }],
+    staticClass: "edit--block"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.login),
+      expression: "login"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text"
+    },
+    domProps: {
+      "value": (_vm.login)
+    },
+    on: {
+      "keyup": function($event) {
+        if (_vm._k($event.keyCode, "enter", 13)) { return null; }
+        _vm.editClick('login')
+      },
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.login = $event.target.value
+      }
+    }
+  }), _vm._v(" "), _c('i', {
+    staticClass: "fa fa-times",
+    attrs: {
+      "aria-hidden": "true"
+    },
+    on: {
+      "click": function($event) {
+        _vm.editClick('login')
+      }
+    }
+  })]), _vm._v(" "), _c('p', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (!_vm.edit.login),
+      expression: "!edit.login"
+    }]
+  }, [_vm._v(_vm._s(_vm.login) + "\n                "), _c('i', {
+    staticClass: "fa fa-pencil",
+    attrs: {
+      "aria-hidden": "true"
+    },
+    on: {
+      "click": function($event) {
+        _vm.editClick('login')
+      }
+    }
+  })])])]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-12"
+  }, [_c('h4', {
+    staticClass: "text-center"
+  }, [_vm._v("Connected providers:")]), _vm._v(" "), _c('ul', {
+    staticClass: "list-group"
+  }, _vm._l((_vm.social), function(provider) {
+    return _c('li', {
+      staticClass: "list-group-item"
+    }, [_vm._v("\n                " + _vm._s(provider) + "\n            ")])
+  }))])])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "col-md-3"
+  }, [_c('img', {
+    staticClass: "img-rounded",
+    attrs: {
+      "src": "http://placehold.it/150x150",
+      "alt": "user--img"
+    }
+  })])
+}]}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()

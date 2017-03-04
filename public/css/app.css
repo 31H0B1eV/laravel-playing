@@ -9818,3 +9818,24 @@ fieldset[disabled] .btn-yahoo.focus {
   color: #720e9e;
   background-color: #fff;
 }
+
+.fa-pencil {
+  cursor: pointer;
+  margin-left: 5px;
+}
+
+.edit--block {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+.edit--block > i {
+  margin-left: 5px;
+  margin-top: 10px;
+  cursor: pointer;
+}
