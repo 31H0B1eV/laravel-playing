@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
 
 class HomeController extends Controller
 {
@@ -23,17 +24,11 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        if($request->id) {
-            
-        }
-
-        if(\Auth::user()) {
+        if(\Auth::check() && \Auth::user()->id == $request->id) {
             $providers = array();
-            foreach (\Auth::user()->social as $provider) {
-                array_push($providers, $provider->provider_name);
-            }
+            $user = User::where('id', '=', $request->id)->first();
 
-            return view('home', compact('providers'));
+            return view('home', ['user' => $user, 'providers' => $providers]);
         }
 
         return view('home');

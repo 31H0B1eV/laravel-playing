@@ -108,7 +108,7 @@ Vue.use(VeeValidate);
             }
         },
         mounted() {
-            // console.log(this.user.id, this.social);
+            console.log(this.user.id);
         }
     }
 </script>

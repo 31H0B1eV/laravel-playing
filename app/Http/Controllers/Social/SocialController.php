@@ -45,7 +45,7 @@ class SocialController extends Controller
 
         if(get_class($authUser) == 'App\User') { // fails on: !$user->email
             Auth::login($authUser, true);
-            return redirect()->route('home', ['id' => Auth::user()->id]);
+            return redirect()->route('home', ['id' => \Auth::user()->id]);
         }
 
         return redirect('register');

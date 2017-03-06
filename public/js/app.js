@@ -15703,7 +15703,7 @@ VeeValidate.Validator.extend('login_length', {
         }
     },
     mounted: function mounted() {
-        // console.log(this.user.id, this.social);
+        console.log(this.user.id);
     }
 };
 

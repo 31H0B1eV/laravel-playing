@@ -8,10 +8,12 @@
                 <div class="panel-heading">Dashboard</div>
 
                 <div class="panel-body">
-                    @if(\Auth::check())
+                    @if(\Auth::check() && isset($user))
                         <profile
-                            :user="{{ \Auth::user()->first() }}"
+                            :user="{{ $user }}"
                             :social="{{ json_encode($providers) }}" ></profile>
+                    @else
+                        <h3>You really need this user info?</h3>
                     @endif
                 </div>
             </div>

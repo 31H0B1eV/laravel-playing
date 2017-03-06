@@ -3,7 +3,9 @@
 Auth::routes();
 
 Route::get('/', 'AppController@index');
-Route::get('/dashboard/{id?}', 'HomeController@index')->name('home');
+Route::get('/dashboard/{id}', 'HomeController@index')->name('home');
+
+Route::post('/dashboard/{id}/update', 'ProfileController@update');
 
 Route::group(['namespace' => 'Social', 'prefix' => 'social'], function() {
     Route::get('/login/{provider}', 'SocialController@login')->name('social.login');
