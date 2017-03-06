@@ -21,8 +21,12 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        if($request->id) {
+            
+        }
+
         if(\Auth::user()) {
             $providers = array();
             foreach (\Auth::user()->social as $provider) {
