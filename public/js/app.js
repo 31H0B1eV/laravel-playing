@@ -11195,14 +11195,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 __webpack_require__(31);
 
-
-Vue.use(__WEBPACK_IMPORTED_MODULE_0_vee_validate___default.a);
-
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
+
+
 
 Vue.component('profile', __webpack_require__(35));
 
@@ -12127,6 +12126,32 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+
+Vue.use(VeeValidate);
+
+VeeValidate.Validator.extend('name_length', {
+    getMessage: function getMessage(field) {
+        return 'Name must be less than 50 characters.';
+    },
+    validate: function validate(value) {
+        return value.length < 50;
+    }
+});
+
+VeeValidate.Validator.extend('login_length', {
+    getMessage: function getMessage(field) {
+        return 'Login must be more than 3 characters.';
+    },
+    validate: function validate(value) {
+        return value.length > 3;
+    }
+});
 
 /* harmony default export */ __webpack_exports__["default"] = {
     props: {
@@ -12151,7 +12176,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.edit[name] = !this.edit[name];
         },
         updateRecord: function updateRecord(name) {
-            console.log(name, 'updated');
+            // TODO: ajax request
+            this.edit[name] = !this.edit[name];
         }
     },
     mounted: function mounted() {
@@ -12161,9 +12187,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 /* 31 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
 /* WEBPACK VAR INJECTION */(function(__webpack_provided_window_dot_jQuery) {
 window._ = __webpack_require__(33);
 
@@ -12184,6 +12209,8 @@ __webpack_require__(32);
  */
 
 window.Vue = __webpack_require__(38);
+
+window.VeeValidate = __webpack_require__(34);
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
@@ -12210,7 +12237,7 @@ window.axios.defaults.headers.common = {
 //     broadcaster: 'pusher',
 //     key: 'your-pusher-key'
 // });
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(2)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
 /* 32 */
@@ -35322,10 +35349,16 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       rawName: "v-model",
       value: (_vm.name),
       expression: "name"
+    }, {
+      name: "validate",
+      rawName: "v-validate",
+      value: (_vm.name),
+      expression: "name"
     }],
     staticClass: "form-control",
     attrs: {
-      "type": "text"
+      "type": "text",
+      "data-vv-rules": "required|name_length"
     },
     domProps: {
       "value": (_vm.name)
@@ -35350,7 +35383,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.editClick('name')
       }
     }
-  })]), _vm._v(" "), _c('p', {
+  })]), _vm._v(" "), (_vm.errors.has('name')) ? _c('p', {
+    staticClass: "text-danger"
+  }, [_vm._v(_vm._s(_vm.errors.first('name')))]) : _vm._e(), _vm._v(" "), _c('p', {
     directives: [{
       name: "show",
       rawName: "v-show",
@@ -35455,10 +35490,16 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       rawName: "v-model",
       value: (_vm.login),
       expression: "login"
+    }, {
+      name: "validate",
+      rawName: "v-validate",
+      value: (_vm.login),
+      expression: "login"
     }],
     staticClass: "form-control",
     attrs: {
-      "type": "text"
+      "type": "text",
+      "data-vv-rules": "required|login_length"
     },
     domProps: {
       "value": (_vm.login)
@@ -35483,7 +35524,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.editClick('login')
       }
     }
-  })]), _vm._v(" "), _c('p', {
+  })]), _vm._v(" "), (_vm.errors.has('login')) ? _c('p', {
+    staticClass: "text-danger"
+  }, [_vm._v(_vm._s(_vm.errors.first('login')))]) : _vm._e(), _vm._v(" "), _c('p', {
     directives: [{
       name: "show",
       rawName: "v-show",
