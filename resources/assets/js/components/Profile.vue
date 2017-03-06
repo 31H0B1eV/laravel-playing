@@ -9,7 +9,7 @@
             <h4>Full name:</h4>
             <div v-show="edit.name" class="edit--block">                
                 <input class="form-control" type="text"
-                 v-on:keyup.enter="editClick('name')"
+                 v-on:keyup.enter="updateRecord('name')"
                  v-model="name" >
                 <i class="fa fa-times" aria-hidden="true"
                 @click="editClick('name')"></i>
@@ -21,13 +21,16 @@
         </div>
         <div class="col-md-3">
             <h4>Email</h4>
-            <div v-show="edit.email" class="edit--block">                
+            <div v-show="edit.email" class="edit--block" :class="{'has-error': errors.has('email') }">                
                 <input class="form-control" type="text"
-                 v-on:keyup.enter="editClick('email')"
-                 v-model="email" >
+                 v-on:keyup.enter="updateRecord('email')"
+                 v-model="email"
+                 v-validate="email" 
+                 data-vv-rules="required|email" >
                 <i class="fa fa-times" aria-hidden="true"
                 @click="editClick('email')"></i>
             </div>
+            <p class="text-danger" v-if="errors.has('email')">{{ errors.first('email') }}</p>
             <p v-show="!edit.email">{{ email }}
                 <i class="fa fa-pencil" aria-hidden="true"
                  @click="editClick('email')"></i>
@@ -37,7 +40,7 @@
             <h4>Login</h4>
             <div v-show="edit.login" class="edit--block">                
                 <input class="form-control" type="text"
-                 v-on:keyup.enter="editClick('login')"
+                 v-on:keyup.enter="updateRecord('login')"
                  v-model="login" >
                 <i class="fa fa-times" aria-hidden="true"
                 @click="editClick('login')"></i>
@@ -80,6 +83,9 @@
         methods: {
             editClick(name) {
                this.edit[name] = !this.edit[name];
+            },
+            updateRecord(name) {
+                console.log(name, 'updated');
             }
         },
         mounted() {
