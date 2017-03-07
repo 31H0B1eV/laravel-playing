@@ -70,6 +70,11 @@
                                             {{ csrf_field() }}
                                         </form>
                                     </li>
+                                    <li>                                        
+                                        <a href="{{ route('home', ['id' => \Auth::user()->id]) }}">
+                                            Dashboard
+                                        </a>
+                                    </li>
                                 </ul>
                             </li>
                         @endif

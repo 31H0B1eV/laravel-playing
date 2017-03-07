@@ -1,0 +1,114 @@
+<template>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="col-md-3">
+            <img class="img-rounded" src="http://placehold.it/150x150" alt="user--img">
+        </div>
+        <div class="col-md-3">
+            <h4>Full name:</h4>
+            <div v-show="edit.name" class="edit--block">                
+                <input class="form-control" type="text"
+                 v-on:keyup.enter="updateRecord('name')"
+                 v-model="name"
+                 v-validate="name" 
+                 data-vv-rules="required|name_length" >
+                <i class="fa fa-times" aria-hidden="true"
+                @click="editClick('name')"></i>
+            </div>
+            <p class="text-danger" v-if="errors.has('name')">{{ errors.first('name') }}</p>
+            <p v-show="!edit.name">{{ name }}
+                <i class="fa fa-pencil" aria-hidden="true"
+                 @click="editClick('name')"></i>
+            </p>
+        </div>
+        <div class="col-md-3">
+            <h4>Email</h4>
+            <div v-show="edit.email" class="edit--block" :class="{'has-error': errors.has('email') }">                
+                <input class="form-control" type="text"
+                 v-on:keyup.enter="updateRecord('email')"
+                 v-model="email"
+                 v-validate="email" 
+                 data-vv-rules="required|email" >
+                <i class="fa fa-times" aria-hidden="true"
+                @click="editClick('email')"></i>
+            </div>
+            <p class="text-danger" v-if="errors.has('email')">{{ errors.first('email') }}</p>
+            <p v-show="!edit.email">{{ email }}
+                <i class="fa fa-pencil" aria-hidden="true"
+                 @click="editClick('email')"></i>
+            </p>
+        </div>
+        <div class="col-md-3">
+            <h4>Login</h4>
+            <div v-show="edit.login" class="edit--block">                
+                <input class="form-control" type="text"
+                 v-on:keyup.enter="updateRecord('login')"
+                 v-model="login"
+                 v-validate="login" 
+                 data-vv-rules="required|login_length" >
+                <i class="fa fa-times" aria-hidden="true"
+                @click="editClick('login')"></i>
+            </div>
+            <p class="text-danger" v-if="errors.has('login')">{{ errors.first('login') }}</p>
+            <p v-show="!edit.login">{{ login }}
+                <i class="fa fa-pencil" aria-hidden="true"
+                 @click="editClick('login')"></i>
+            </p>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <h4 class="text-center">Connected providers:</h4>
+        <ul class="list-group">
+            <li class="list-group-item" v-for="provider in social">
+                {{ provider }}
+            </li>
+        </ul>
+    </div>
+</div>
+</template>
+
+<script>
+Vue.use(VeeValidate);
+
+    VeeValidate.Validator.extend('name_length', {
+        getMessage: field => 'Name must be less than 50 characters.',
+        validate: value => value.length < 50
+    });
+
+    VeeValidate.Validator.extend('login_length', {
+        getMessage: field => 'Login must be more than 3 characters.',
+        validate: value => value.length > 3
+    });
+
+    export default {
+        props: {
+            user: Object,
+            social: Array
+        },
+        data() {
+            return {
+                name: this.user.name,
+                email: this.user.email,
+                login: this.user.username,
+                edit: {
+                    name: false,
+                    email: false,
+                    login: false
+                }
+            };
+        },
+        methods: {
+            editClick(name) {
+                this.edit[name] = !this.edit[name];
+            },
+            updateRecord(name) {
+                // TODO: ajax request
+                this.edit[name] = !this.edit[name];
+            }
+        },
+        mounted() {
+            console.log(this.user.id);
+        }
+    }
+</script>

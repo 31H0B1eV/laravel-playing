@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
 
 class HomeController extends Controller
 {
@@ -21,8 +22,15 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        if(\Auth::check() && \Auth::user()->id == $request->id) {
+            $providers = array();
+            $user = User::where('id', '=', $request->id)->first();
+
+            return view('home', ['user' => $user, 'providers' => $providers]);
+        }
+
         return view('home');
     }
 }

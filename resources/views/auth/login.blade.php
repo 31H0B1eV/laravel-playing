@@ -10,15 +10,15 @@
                     <form class="form-horizontal" role="form" method="POST" action="{{ route('login') }}">
                         {{ csrf_field() }}
 
-                        <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
-                            <label for="username" class="col-md-4 control-label">Login</label>
+                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                            <label for="email" class="col-md-4 control-label">Email</label>
 
                             <div class="col-md-6">
-                                <input id="username" type="username" class="form-control" name="username" value="{{ old('username') }}" required autofocus>
+                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
 
-                                @if ($errors->has('username'))
+                                @if ($errors->has('email'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('username') }}</strong>
+                                        <strong>{{ $errors->first('email') }}</strong>
                                     </span>
                                 @endif
                             </div>
@@ -60,6 +60,16 @@
                             </div>
                         </div>
                     </form>
+                    <hr>
+
+                    {{-- <a class="btn btn-social-icon btn-vk">
+                        <span class="fa fa-vk"></span>
+                    </a> --}}
+                    <div class="col-md-4">
+                        <a class="btn btn-block btn-social btn-vk" href="{{ route('social.login', ['vkontakte']) }}">
+                            <span class="fa fa-vk"></span> Sign in with VK
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

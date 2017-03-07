@@ -13,7 +13,9 @@ require('./bootstrap');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('example', require('./components/Example.vue'));
+import VeeValidate from 'vee-validate';
+
+Vue.component('profile', require('./components/Profile.vue'));
 
 const app = new Vue({
     el: '#app'

@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'vk_token', 'username'
+        'id', 'name', 'email', 'password', 'username'
     ];
 
     /**
@@ -24,6 +24,11 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token', 'vk_token'
+        'password', 'remember_token', 'created_at', 'updated_at'
     ];
+
+    public function social()
+    {
+        return $this->hasMany('App\Social', 'user_id', 'id');
+    }
 }
