@@ -15654,6 +15654,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 Vue.use(VeeValidate);
 
@@ -15697,13 +15700,20 @@ VeeValidate.Validator.extend('login_length', {
         editClick: function editClick(name) {
             this.edit[name] = !this.edit[name];
         },
-        updateRecord: function updateRecord(name) {
-            // TODO: ajax request
+        updateRecord: function updateRecord($event) {
+            axios.post('/dashboard/' + this.user.id + '/update', {
+                data: $event.target.value,
+                field_name: $event.target.id
+            }).then(function (response) {
+                console.info(response.data);
+            }).catch(function (error) {
+                console.error(response);
+            });
             this.edit[name] = !this.edit[name];
         }
     },
     mounted: function mounted() {
-        console.log(this.user.id);
+        // console.log(this.user.id);
     }
 };
 
@@ -35251,7 +35261,7 @@ var Component = __webpack_require__(36)(
   /* cssModules */
   null
 )
-Component.options.__file = "/home/artem/Development/playing/resources/assets/js/components/Profile.vue"
+Component.options.__file = "/home/artem/Development/social/resources/assets/js/components/Profile.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Profile.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -35262,9 +35272,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-5eb847c3", Component.options)
+    hotAPI.createRecord("data-v-babab910", Component.options)
   } else {
-    hotAPI.reload("data-v-5eb847c3", Component.options)
+    hotAPI.reload("data-v-babab910", Component.options)
   }
 })()}
 
@@ -35358,6 +35368,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "form-control",
     attrs: {
       "type": "text",
+      "id": "name",
       "data-vv-rules": "required|name_length"
     },
     domProps: {
@@ -35366,7 +35377,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "keyup": function($event) {
         if (_vm._k($event.keyCode, "enter", 13)) { return null; }
-        _vm.updateRecord('name')
+        _vm.updateRecord($event)
       },
       "input": function($event) {
         if ($event.target.composing) { return; }
@@ -35430,6 +35441,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "form-control",
     attrs: {
       "type": "text",
+      "id": "email",
       "data-vv-rules": "required|email"
     },
     domProps: {
@@ -35438,7 +35450,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "keyup": function($event) {
         if (_vm._k($event.keyCode, "enter", 13)) { return null; }
-        _vm.updateRecord('email')
+        _vm.updateRecord($event)
       },
       "input": function($event) {
         if ($event.target.composing) { return; }
@@ -35499,6 +35511,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "form-control",
     attrs: {
       "type": "text",
+      "id": "login",
       "data-vv-rules": "required|login_length"
     },
     domProps: {
@@ -35507,7 +35520,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "keyup": function($event) {
         if (_vm._k($event.keyCode, "enter", 13)) { return null; }
-        _vm.updateRecord('login')
+        _vm.updateRecord($event)
       },
       "input": function($event) {
         if ($event.target.composing) { return; }
@@ -35569,7 +35582,7 @@ module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-5eb847c3", module.exports)
+     require("vue-hot-reload-api").rerender("data-v-babab910", module.exports)
   }
 }
 

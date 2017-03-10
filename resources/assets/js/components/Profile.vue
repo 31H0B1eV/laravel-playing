@@ -9,7 +9,8 @@
             <h4>Full name:</h4>
             <div v-show="edit.name" class="edit--block">                
                 <input class="form-control" type="text"
-                 v-on:keyup.enter="updateRecord('name')"
+                 id="name"
+                 v-on:keyup.enter="updateRecord($event)"
                  v-model="name"
                  v-validate="name" 
                  data-vv-rules="required|name_length" >
@@ -26,7 +27,8 @@
             <h4>Email</h4>
             <div v-show="edit.email" class="edit--block" :class="{'has-error': errors.has('email') }">                
                 <input class="form-control" type="text"
-                 v-on:keyup.enter="updateRecord('email')"
+                 id="email"
+                 v-on:keyup.enter="updateRecord($event)"
                  v-model="email"
                  v-validate="email" 
                  data-vv-rules="required|email" >
@@ -43,7 +45,8 @@
             <h4>Login</h4>
             <div v-show="edit.login" class="edit--block">                
                 <input class="form-control" type="text"
-                 v-on:keyup.enter="updateRecord('login')"
+                 id="login"
+                 v-on:keyup.enter="updateRecord($event)"
                  v-model="login"
                  v-validate="login" 
                  data-vv-rules="required|login_length" >
@@ -102,13 +105,22 @@ Vue.use(VeeValidate);
             editClick(name) {
                 this.edit[name] = !this.edit[name];
             },
-            updateRecord(name) {
-                // TODO: ajax request
+            updateRecord($event) {
+                axios.post(`/dashboard/${this.user.id}/update`, {
+                        data: $event.target.value,
+                        field_name: $event.target.id
+                    })
+                    .then((response) => {
+                        console.info(response.data);
+                    })
+                    .catch((error) => {
+                        console.error(response);
+                    });
                 this.edit[name] = !this.edit[name];
             }
         },
         mounted() {
-            console.log(this.user.id);
+            // console.log(this.user.id);
         }
     }
 </script>
