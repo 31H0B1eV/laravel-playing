@@ -25,10 +25,9 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         if(\Auth::check() && \Auth::user()->id == $request->id) {
-            $providers = array();
             $user = User::where('id', '=', $request->id)->first();
 
-            return view('home', ['user' => $user, 'providers' => $providers]);
+            return view('home', ['user' => $user, 'providers' => $user->social()->get()]);
         }
 
         return view('home');

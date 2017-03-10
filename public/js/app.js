@@ -15727,7 +15727,7 @@ VeeValidate.Validator.extend('login_length', {
         }
     },
     mounted: function mounted() {
-        // console.log(this.user.id);
+        // console.log(this.user, this.social);
     }
 };
 
@@ -35579,7 +35579,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, _vm._l((_vm.social), function(provider) {
     return _c('li', {
       staticClass: "list-group-item"
-    }, [_vm._v("\n                " + _vm._s(provider) + "\n            ")])
+    }, [_vm._v("\n                " + _vm._s(provider.provider_name) + "\n            ")])
   }))])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {

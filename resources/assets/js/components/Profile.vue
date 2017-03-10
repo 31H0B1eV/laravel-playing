@@ -64,7 +64,7 @@
         <h4 class="text-center">Connected providers:</h4>
         <ul class="list-group">
             <li class="list-group-item" v-for="provider in social">
-                {{ provider }}
+                {{ provider.provider_name }}
             </li>
         </ul>
     </div>
@@ -130,7 +130,7 @@ import { ErrorBag } from 'vee-validate';
             }
         },
         mounted() {
-            // console.log(this.user.id);
+            // console.log(this.user, this.social);
         }
     }
 </script>
