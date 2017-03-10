@@ -104,6 +104,7 @@ import { ErrorBag } from 'vee-validate';
         },
         methods: {
             editClick(name) {
+                this.errors.clear();
                 this.edit[name] = !this.edit[name];
             },
             updateRecord($event) {
@@ -112,13 +113,13 @@ import { ErrorBag } from 'vee-validate';
                         field_name: $event.target.id
                     })
                     .then((response) => {
-                        if(response.data.data) {
+                        if(response.data.data && response.data.data instanceof Array) {
                             // add error from laravel validator to vee-validate and replace default fild name with user friendly
                             this.errors.add($event.target.id, response.data.data[0].replace('data', $event.target.id));
                         } else if(response.data[$event.target.id]) {
                             this.errors.add($event.target.id, response.data[$event.target.id][0].replace('data', $event.target.id));
                         } else {
-                            console.info(response.data);
+                            this.edit[$event.target.id] = !this.edit[$event.target.id];
                         }
                     })
                     .catch((error) => {
@@ -126,7 +127,6 @@ import { ErrorBag } from 'vee-validate';
                         // TODO: change it to use response.error.message
                         this.errors.add($event.target.id, 'Something wrong with change ', $event.target.id);
                     });
-                this.edit[name] = !this.edit[name];
             }
         },
         mounted() {

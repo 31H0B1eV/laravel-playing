@@ -86,11 +86,9 @@ class ProfileController extends Controller
             return $validator->errors();
         }
 
-        return [ // TODO: add real response
-            'value' => $request['data'],
-            'field' => $request['field_name'],
-            'user_id' => $id
-        ];
+        $this->updateRecord($request, $id);
+
+        return ['data' => 'success'];
     }
 
     /**
@@ -102,6 +100,30 @@ class ProfileController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function updateRecord($data, $user_id)
+    {
+        $user = User::where('id', '=', $user_id)->first();
+
+        switch ($data['field_name']) {
+            case 'name':
+                $user->name = $data['data'];
+                $user->save();
+                break;            
+            case 'email':
+                $user->email = $data['data'];
+                $user->save();
+                break;            
+            case 'login':
+                $user->username = $data['data'];
+                $user->save();
+                break;            
+            default:
+                break;
+        }
+
+        return $user;
     }
 
     public function validateDataBeforeUpdate($name, $value)
