@@ -15659,9 +15659,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 Vue.use(VeeValidate);
 
+
+axios.defaults.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
 VeeValidate.Validator.extend('name_length', {
     getMessage: function getMessage(field) {
@@ -15688,6 +15695,7 @@ VeeValidate.Validator.extend('login_length', {
     },
     data: function data() {
         return {
+            avatar: '',
             name: this.user.name,
             email: this.user.email,
             login: this.user.username,
@@ -15703,6 +15711,17 @@ VeeValidate.Validator.extend('login_length', {
         editClick: function editClick(name) {
             this.errors.clear();
             this.edit[name] = !this.edit[name];
+        },
+        uploadImage: function uploadImage($event) {
+            $event.preventDefault();
+            var data = new FormData();
+            data.append('avatar', document.getElementById('avatar').files[0]);
+
+            axios.post('/avatars', data).then(function (response) {
+                console.log(response);
+            }).catch(function (errors) {
+                console.log(errors);
+            });
         },
         updateRecord: function updateRecord($event) {
             var _this = this;
@@ -35275,7 +35294,7 @@ var Component = __webpack_require__(36)(
   /* cssModules */
   null
 )
-Component.options.__file = "/home/artem/Development/social/resources/assets/js/components/Profile.vue"
+Component.options.__file = "/home/artem/Development/Social-feed/resources/assets/js/components/Profile.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Profile.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -35286,9 +35305,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-babab910", Component.options)
+    hotAPI.createRecord("data-v-5c1d69da", Component.options)
   } else {
-    hotAPI.reload("data-v-babab910", Component.options)
+    hotAPI.reload("data-v-5c1d69da", Component.options)
   }
 })()}
 
@@ -35357,7 +35376,41 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "row"
   }, [_c('div', {
     staticClass: "col-md-12"
-  }, [_vm._m(0), _vm._v(" "), _c('div', {
+  }, [_c('div', {
+    staticClass: "col-md-3"
+  }, [_c('img', {
+    staticClass: "img-rounded user--img",
+    attrs: {
+      "src": "http://placehold.it/150x150",
+      "alt": "user-image"
+    }
+  }), _vm._v(" "), _c('form', {
+    attrs: {
+      "method": "post",
+      "action": "avatars",
+      "enctype": "multipart/form-data"
+    },
+    on: {
+      "submit": function($event) {
+        _vm.uploadImage($event)
+      }
+    }
+  }, [_c('input', {
+    staticClass: "btn btn-default btn-file",
+    attrs: {
+      "type": "file",
+      "name": "avatar",
+      "id": "avatar"
+    }
+  }), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-primary",
+    staticStyle: {
+      "margin-top": "5px"
+    },
+    attrs: {
+      "type": "submit"
+    }
+  }, [_vm._v("Save avatar")])])]), _vm._v(" "), _c('div', {
     staticClass: "col-md-3"
   }, [_c('h4', [_vm._v("Full name:")]), _vm._v(" "), _c('div', {
     directives: [{
@@ -35571,22 +35624,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: "list-group-item"
     }, [_vm._v("\n                " + _vm._s(provider.provider_name) + "\n            ")])
   }))])])
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "col-md-3"
-  }, [_c('img', {
-    staticClass: "img-rounded",
-    attrs: {
-      "src": "http://placehold.it/150x150",
-      "alt": "user--img"
-    }
-  })])
-}]}
+},staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-babab910", module.exports)
+     require("vue-hot-reload-api").rerender("data-v-5c1d69da", module.exports)
   }
 }
 

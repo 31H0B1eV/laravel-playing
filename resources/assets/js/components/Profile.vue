@@ -3,7 +3,12 @@
 <div class="row">
     <div class="col-md-12">
         <div class="col-md-3">
-            <img class="img-rounded" src="http://placehold.it/150x150" alt="user--img">
+            <img class="img-rounded user--img" src="http://placehold.it/150x150" alt="user-image">
+            <form method="post" action="avatars" enctype="multipart/form-data"
+             v-on:submit="uploadImage($event)">
+                <input class="btn btn-default btn-file" type="file" name="avatar" id="avatar"></input>
+                <button style="margin-top:5px;" class="btn btn-primary" type="submit">Save avatar</button>
+            </form>
         </div>
         <div class="col-md-3">
             <h4>Full name:</h4>
@@ -75,6 +80,8 @@
 Vue.use(VeeValidate);
 import { ErrorBag } from 'vee-validate';
 
+axios.defaults.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
     VeeValidate.Validator.extend('name_length', {
         getMessage: field => 'Name must be less than 50 characters.',
         validate: value => value.length < 50
@@ -92,6 +99,7 @@ import { ErrorBag } from 'vee-validate';
         },
         data() {
             return {
+                avatar: '',
                 name: this.user.name,
                 email: this.user.email,
                 login: this.user.username,
@@ -106,6 +114,18 @@ import { ErrorBag } from 'vee-validate';
             editClick(name) {
                 this.errors.clear();
                 this.edit[name] = !this.edit[name];
+            },
+            uploadImage($event) {
+                $event.preventDefault();
+                let data = new FormData();
+                data.append('avatar', document.getElementById('avatar').files[0]);
+
+                axios.post('/avatars', data)
+                .then((response) => {
+                    console.log(response);
+                }).catch((errors) => {
+                    console.log(errors);
+                })
             },
             updateRecord($event) {
                 axios.post(`/dashboard/${this.user.id}/update`, {
