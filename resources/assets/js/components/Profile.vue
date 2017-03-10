@@ -37,8 +37,8 @@
             </div>
             <p class="text-danger" v-if="errors.has('email')">{{ errors.first('email') }}</p>
             <p v-show="!edit.email">{{ email }}
-                <i class="fa fa-pencil" aria-hidden="true"
-                 @click="editClick('email')"></i>
+               <!--  <i class="fa fa-pencil" aria-hidden="true"
+                 @click="editClick('email')"></i> -->
             </p>
         </div>
         <div class="col-md-3">
