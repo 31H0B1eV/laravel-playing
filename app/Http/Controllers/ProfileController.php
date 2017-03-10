@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Foundation\Validation\ValidatesRequests;
+use App\User;
 
 class ProfileController extends Controller
 {
+    use ValidatesRequests;
+
     /**
      * Display a listing of the resource.
      *
@@ -67,8 +71,22 @@ class ProfileController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
-        return [
+    {        
+        $validator = \Validator::make($request->all(), [
+            'data' => 'required|min:3',
+        ]);
+
+        $validator->after(function ($validator) use ($request) {
+            if (!$this->validateDataBeforeUpdate($request['field_name'], $request['data'])) {
+                $validator->errors()->add($request['field_name'], 'Cannot use this ' . $request['field_name']);
+            }
+        });
+
+        if ($validator->fails()) {
+            return $validator->errors();
+        }
+
+        return [ // TODO: add real response
             'value' => $request['data'],
             'field' => $request['field_name'],
             'user_id' => $id
@@ -84,5 +102,34 @@ class ProfileController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function validateDataBeforeUpdate($name, $value)
+    { // TODO: add more check for all fields.
+        switch ($name) {
+            case 'name':
+                return true;
+                break;
+            
+            case 'email':
+                if (!filter_var($value, FILTER_VALIDATE_EMAIL)) { // must be valid email
+                    return false; 
+                } else if (User::where('email', '=', $value)->first()) { // email must be unique
+                    return false; 
+                }
+                return true;
+                break;
+            
+            case 'login':
+                if (User::where('username', '=', $value)->first()) { // must be unique
+                    return false; 
+                } 
+                return true;
+                break;
+            
+            default:
+                return true;
+                break;
+        }
     }
 }

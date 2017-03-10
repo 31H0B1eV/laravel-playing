@@ -73,6 +73,7 @@
 
 <script>
 Vue.use(VeeValidate);
+import { ErrorBag } from 'vee-validate';
 
     VeeValidate.Validator.extend('name_length', {
         getMessage: field => 'Name must be less than 50 characters.',
@@ -111,10 +112,19 @@ Vue.use(VeeValidate);
                         field_name: $event.target.id
                     })
                     .then((response) => {
-                        console.info(response.data);
+                        if(response.data.data) {
+                            // add error from laravel validator to vee-validate and replace default fild name with user friendly
+                            this.errors.add($event.target.id, response.data.data[0].replace('data', $event.target.id));
+                        } else if(response.data[$event.target.id]) {
+                            this.errors.add($event.target.id, response.data[$event.target.id][0].replace('data', $event.target.id));
+                        } else {
+                            console.info(response.data);
+                        }
                     })
                     .catch((error) => {
-                        console.error(response);
+                        console.info(error);
+                        // TODO: change it to use response.error.message
+                        this.errors.add($event.target.id, 'Something wrong with change ', $event.target.id);
                     });
                 this.edit[name] = !this.edit[name];
             }

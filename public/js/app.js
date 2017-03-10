@@ -15584,6 +15584,8 @@ module.exports = function spread(callback) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vee_validate__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vee_validate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vee_validate__);
 //
 //
 //
@@ -15660,6 +15662,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 Vue.use(VeeValidate);
 
+
 VeeValidate.Validator.extend('name_length', {
     getMessage: function getMessage(field) {
         return 'Name must be less than 50 characters.';
@@ -15701,13 +15704,24 @@ VeeValidate.Validator.extend('login_length', {
             this.edit[name] = !this.edit[name];
         },
         updateRecord: function updateRecord($event) {
+            var _this = this;
+
             axios.post('/dashboard/' + this.user.id + '/update', {
                 data: $event.target.value,
                 field_name: $event.target.id
             }).then(function (response) {
-                console.info(response.data);
+                if (response.data.data) {
+                    // add error from laravel validator to vee-validate and replace default fild name with user friendly
+                    _this.errors.add($event.target.id, response.data.data[0].replace('data', $event.target.id));
+                } else if (response.data[$event.target.id]) {
+                    _this.errors.add($event.target.id, response.data[$event.target.id][0].replace('data', $event.target.id));
+                } else {
+                    console.info(response.data);
+                }
             }).catch(function (error) {
-                console.error(response);
+                console.info(error);
+                // TODO: change it to use response.error.message
+                _this.errors.add($event.target.id, 'Something wrong with change ', $event.target.id);
             });
             this.edit[name] = !this.edit[name];
         }
