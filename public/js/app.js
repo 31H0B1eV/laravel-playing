@@ -15695,7 +15695,6 @@ VeeValidate.Validator.extend('login_length', {
             name: this.user.name,
             email: this.user.email,
             login: this.user.username,
-            avatar: this.user.avatar ? '/img/avatars/' + this.user.avatar : 'http://placehold.it/150x150',
             edit: {
                 name: false,
                 email: false,
@@ -15705,6 +15704,9 @@ VeeValidate.Validator.extend('login_length', {
     },
 
     methods: {
+        getAvatar: function getAvatar(avatar) {
+            return avatar ? '/img/avatars/' + avatar : 'http://placehold.it/150x150';
+        },
         editClick: function editClick(name) {
             this.errors.clear();
             this.edit[name] = !this.edit[name];
@@ -15715,7 +15717,7 @@ VeeValidate.Validator.extend('login_length', {
             data.append('avatar', document.getElementById('avatar').files[0]);
 
             axios.post('/avatars', data).then(function (response) {
-                console.log(response.statusText);
+                if (response.status != 200) console.log(response.status);
             }).catch(function (errors) {
                 console.log(errors);
             });
@@ -35378,7 +35380,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('img', {
     staticClass: "img-rounded user--img",
     attrs: {
-      "src": _vm.avatar,
+      "src": _vm.getAvatar(_vm.user.avatar),
       "alt": "user-image"
     }
   }), _vm._v(" "), _c('form', {

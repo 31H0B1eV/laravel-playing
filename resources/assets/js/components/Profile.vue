@@ -3,7 +3,7 @@
 <div class="row">
     <div class="col-md-12">
         <div class="col-md-3">
-            <img class="img-rounded user--img" :src="avatar" alt="user-image">
+            <img class="img-rounded user--img" :src="getAvatar(user.avatar)" alt="user-image">
             <form method="post" action="avatars" enctype="multipart/form-data"
              v-on:submit="uploadImage($event)">
                 <input class="btn btn-default btn-file" type="file" name="avatar" id="avatar"></input>
@@ -99,7 +99,6 @@ axios.defaults.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[nam
                 name: this.user.name,
                 email: this.user.email,
                 login: this.user.username,
-                avatar: this.user.avatar ? `/img/avatars/${this.user.avatar}` : 'http://placehold.it/150x150',
                 edit: {
                     name: false,
                     email: false,
@@ -108,6 +107,9 @@ axios.defaults.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[nam
             };
         },
         methods: {
+            getAvatar(avatar){
+                return avatar ? `/img/avatars/${avatar}` : 'http://placehold.it/150x150';
+            },
             editClick(name) {
                 this.errors.clear();
                 this.edit[name] = !this.edit[name];
@@ -119,7 +121,8 @@ axios.defaults.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[nam
 
                 axios.post('/avatars', data)
                 .then((response) => {
-                    console.log(response.statusText);
+                    if(response.status != 200)
+                        console.log(response.status);
                 }).catch((errors) => {
                     console.log(errors);
                 })
