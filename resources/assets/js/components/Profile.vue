@@ -3,16 +3,20 @@
 <div class="row">
     <div class="col-md-12">
         <div class="col-md-3">
-            <img class="img-rounded" src="http://placehold.it/150x150" alt="user--img">
+            <img class="img-rounded user--img" :src="getAvatar(user.avatar)" alt="user-image">
+            <form method="post" action="avatars" enctype="multipart/form-data"
+             v-on:submit="uploadImage($event)">
+                <input class="btn btn-default btn-file" type="file" name="avatar" id="avatar"></input>
+                <button style="margin-top:5px;" class="btn btn-primary" type="submit">Save avatar</button>
+            </form>
         </div>
         <div class="col-md-3">
-            <h4>Full name:</h4>
-            <div v-show="edit.name" class="edit--block">                
+            <div v-show="edit.name" class="edit--block">
                 <input class="form-control" type="text"
                  id="name"
                  v-on:keyup.enter="updateRecord($event)"
                  v-model="name"
-                 v-validate="name" 
+                 v-validate="name"
                  data-vv-rules="required|name_length" >
                 <i class="fa fa-times" aria-hidden="true"
                 @click="editClick('name')"></i>
@@ -24,13 +28,12 @@
             </p>
         </div>
         <div class="col-md-3">
-            <h4>Email</h4>
-            <div v-show="edit.email" class="edit--block" :class="{'has-error': errors.has('email') }">                
+            <div v-show="edit.email" class="edit--block" :class="{'has-error': errors.has('email') }">
                 <input class="form-control" type="text"
                  id="email"
                  v-on:keyup.enter="updateRecord($event)"
                  v-model="email"
-                 v-validate="email" 
+                 v-validate="email"
                  data-vv-rules="required|email" >
                 <i class="fa fa-times" aria-hidden="true"
                 @click="editClick('email')"></i>
@@ -42,13 +45,12 @@
             </p>
         </div>
         <div class="col-md-3">
-            <h4>Login</h4>
-            <div v-show="edit.login" class="edit--block">                
+            <div v-show="edit.login" class="edit--block">
                 <input class="form-control" type="text"
                  id="login"
                  v-on:keyup.enter="updateRecord($event)"
                  v-model="login"
-                 v-validate="login" 
+                 v-validate="login"
                  data-vv-rules="required|login_length" >
                 <i class="fa fa-times" aria-hidden="true"
                 @click="editClick('login')"></i>
@@ -74,6 +76,8 @@
 <script>
 Vue.use(VeeValidate);
 import { ErrorBag } from 'vee-validate';
+
+axios.defaults.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
     VeeValidate.Validator.extend('name_length', {
         getMessage: field => 'Name must be less than 50 characters.',
@@ -103,9 +107,25 @@ import { ErrorBag } from 'vee-validate';
             };
         },
         methods: {
+            getAvatar(avatar){
+                return avatar ? `/img/avatars/${avatar}` : 'http://placehold.it/150x150';
+            },
             editClick(name) {
                 this.errors.clear();
                 this.edit[name] = !this.edit[name];
+            },
+            uploadImage($event) {
+                $event.preventDefault();
+                let data = new FormData();
+                data.append('avatar', document.getElementById('avatar').files[0]);
+
+                axios.post('/avatars', data)
+                .then((response) => {
+                    if(response.status != 200)
+                        console.log(response.status);
+                }).catch((errors) => {
+                    console.log(errors);
+                })
             },
             updateRecord($event) {
                 axios.post(`/dashboard/${this.user.id}/update`, {

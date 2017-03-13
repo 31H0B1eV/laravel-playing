@@ -70,6 +70,16 @@
                             <span class="fa fa-vk"></span> Sign in with VK
                         </a>
                     </div>
+                    <div class="col-md-4">
+                        <a class="btn btn-block btn-social btn-github" href="{{ route('social.login', ['github']) }}">
+                            <span class="fa fa-github"></span> Sign in with Github
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a class="btn btn-block btn-social btn-twitter" href="{{ route('social.login', ['twitter']) }}">
+                            <span class="fa fa-twitter"></span> Sign in with Twitter
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

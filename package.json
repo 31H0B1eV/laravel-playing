@@ -13,9 +13,8 @@
     "jquery": "^3.1.0",
     "laravel-mix": "^0.6.0",
     "lodash": "^4.16.2",
-    "vue": "^2.0.1",
-    "vee-validate": "next"
+    "vee-validate": "next",
+    "vue": "^2.0.1"
   },
-  "dependencies": {
-  }
+  "dependencies": {}
 }

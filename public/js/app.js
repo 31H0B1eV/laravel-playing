@@ -15659,9 +15659,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 Vue.use(VeeValidate);
 
+
+axios.defaults.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
 VeeValidate.Validator.extend('name_length', {
     getMessage: function getMessage(field) {
@@ -15700,9 +15704,23 @@ VeeValidate.Validator.extend('login_length', {
     },
 
     methods: {
+        getAvatar: function getAvatar(avatar) {
+            return avatar ? '/img/avatars/' + avatar : 'http://placehold.it/150x150';
+        },
         editClick: function editClick(name) {
             this.errors.clear();
             this.edit[name] = !this.edit[name];
+        },
+        uploadImage: function uploadImage($event) {
+            $event.preventDefault();
+            var data = new FormData();
+            data.append('avatar', document.getElementById('avatar').files[0]);
+
+            axios.post('/avatars', data).then(function (response) {
+                if (response.status != 200) console.log(response.status);
+            }).catch(function (errors) {
+                console.log(errors);
+            });
         },
         updateRecord: function updateRecord($event) {
             var _this = this;
@@ -35357,9 +35375,43 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "row"
   }, [_c('div', {
     staticClass: "col-md-12"
-  }, [_vm._m(0), _vm._v(" "), _c('div', {
+  }, [_c('div', {
     staticClass: "col-md-3"
-  }, [_c('h4', [_vm._v("Full name:")]), _vm._v(" "), _c('div', {
+  }, [_c('img', {
+    staticClass: "img-rounded user--img",
+    attrs: {
+      "src": _vm.getAvatar(_vm.user.avatar),
+      "alt": "user-image"
+    }
+  }), _vm._v(" "), _c('form', {
+    attrs: {
+      "method": "post",
+      "action": "avatars",
+      "enctype": "multipart/form-data"
+    },
+    on: {
+      "submit": function($event) {
+        _vm.uploadImage($event)
+      }
+    }
+  }, [_c('input', {
+    staticClass: "btn btn-default btn-file",
+    attrs: {
+      "type": "file",
+      "name": "avatar",
+      "id": "avatar"
+    }
+  }), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-primary",
+    staticStyle: {
+      "margin-top": "5px"
+    },
+    attrs: {
+      "type": "submit"
+    }
+  }, [_vm._v("Save avatar")])])]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-3"
+  }, [_c('div', {
     directives: [{
       name: "show",
       rawName: "v-show",
@@ -35429,7 +35481,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   })])]), _vm._v(" "), _c('div', {
     staticClass: "col-md-3"
-  }, [_c('h4', [_vm._v("Email")]), _vm._v(" "), _c('div', {
+  }, [_c('div', {
     directives: [{
       name: "show",
       rawName: "v-show",
@@ -35492,7 +35544,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }]
   }, [_vm._v(_vm._s(_vm.email) + "\n               ")])]), _vm._v(" "), _c('div', {
     staticClass: "col-md-3"
-  }, [_c('h4', [_vm._v("Login")]), _vm._v(" "), _c('div', {
+  }, [_c('div', {
     directives: [{
       name: "show",
       rawName: "v-show",
@@ -35571,17 +35623,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: "list-group-item"
     }, [_vm._v("\n                " + _vm._s(provider.provider_name) + "\n            ")])
   }))])])
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "col-md-3"
-  }, [_c('img', {
-    staticClass: "img-rounded",
-    attrs: {
-      "src": "http://placehold.it/150x150",
-      "alt": "user--img"
-    }
-  })])
-}]}
+},staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()

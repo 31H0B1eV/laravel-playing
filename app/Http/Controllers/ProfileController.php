@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use App\User;
+use Storage;
+use Auth;
+use Intervention\Image\ImageManager;
 
 class ProfileController extends Controller
 {
@@ -71,7 +74,7 @@ class ProfileController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {        
+    {
         $validator = \Validator::make($request->all(), [
             'data' => 'required|min:3',
         ]);
@@ -102,6 +105,27 @@ class ProfileController extends Controller
         //
     }
 
+    public function addAvatar()
+    {
+        $file = request()->file('avatar'); // get uploaded file.
+        $manager = new ImageManager(array('driver' => 'gd'));
+        $image = $manager->make($file->getRealPath())->resize(150, 150); // make image and resize
+        $ext = $file->extension();
+        $imageName = Auth::user()->username . ".{$ext}";
+
+        $image->save(public_path('img/avatars/' . $imageName));
+        $this->saveAvatar($imageName);
+
+        return back();
+    }
+
+    public function saveAvatar($name)
+    {
+        $user = User::where('id', '=', Auth::user()->id)->first();
+        $user->avatar = $name;
+        return $user->save();
+    }
+
     public function updateRecord($data, $user_id)
     {
         $user = User::where('id', '=', $user_id)->first();
@@ -110,15 +134,15 @@ class ProfileController extends Controller
             case 'name':
                 $user->name = $data['data'];
                 $user->save();
-                break;            
+                break;
             case 'email':
                 $user->email = $data['data'];
                 $user->save();
-                break;            
+                break;
             case 'login':
                 $user->username = $data['data'];
                 $user->save();
-                break;            
+                break;
             default:
                 break;
         }
@@ -132,23 +156,23 @@ class ProfileController extends Controller
             case 'name':
                 return true;
                 break;
-            
+
             case 'email':
                 if (!filter_var($value, FILTER_VALIDATE_EMAIL)) { // must be valid email
-                    return false; 
+                    return false;
                 } else if (User::where('email', '=', $value)->first()) { // email must be unique
-                    return false; 
+                    return false;
                 }
                 return true;
                 break;
-            
+
             case 'login':
                 if (User::where('username', '=', $value)->first()) { // must be unique
-                    return false; 
-                } 
+                    return false;
+                }
                 return true;
                 break;
-            
+
             default:
                 return true;
                 break;
