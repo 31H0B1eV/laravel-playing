@@ -15661,9 +15661,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
 
 Vue.use(VeeValidate);
 
@@ -35412,7 +35409,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_vm._v("Save avatar")])])]), _vm._v(" "), _c('div', {
     staticClass: "col-md-3"
-  }, [_c('h4', [_vm._v("Full name:")]), _vm._v(" "), _c('div', {
+  }, [_c('div', {
     directives: [{
       name: "show",
       rawName: "v-show",
@@ -35482,7 +35479,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   })])]), _vm._v(" "), _c('div', {
     staticClass: "col-md-3"
-  }, [_c('h4', [_vm._v("Email")]), _vm._v(" "), _c('div', {
+  }, [_c('div', {
     directives: [{
       name: "show",
       rawName: "v-show",
@@ -35545,7 +35542,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }]
   }, [_vm._v(_vm._s(_vm.email) + "\n               ")])]), _vm._v(" "), _c('div', {
     staticClass: "col-md-3"
-  }, [_c('h4', [_vm._v("Login")]), _vm._v(" "), _c('div', {
+  }, [_c('div', {
     directives: [{
       name: "show",
       rawName: "v-show",

@@ -9843,3 +9843,9 @@ fieldset[disabled] .btn-yahoo.focus {
 .user--img {
   margin-bottom: 10px;
 }
+
+.avatar--nav {
+  margin-top: 5px;
+  max-height: 40px;
+  max-width: 40px;
+}

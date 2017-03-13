@@ -11,7 +11,6 @@
             </form>
         </div>
         <div class="col-md-3">
-            <h4>Full name:</h4>
             <div v-show="edit.name" class="edit--block">
                 <input class="form-control" type="text"
                  id="name"
@@ -29,7 +28,6 @@
             </p>
         </div>
         <div class="col-md-3">
-            <h4>Email</h4>
             <div v-show="edit.email" class="edit--block" :class="{'has-error': errors.has('email') }">
                 <input class="form-control" type="text"
                  id="email"
@@ -47,7 +45,6 @@
             </p>
         </div>
         <div class="col-md-3">
-            <h4>Login</h4>
             <div v-show="edit.login" class="edit--block">
                 <input class="form-control" type="text"
                  id="login"
