@@ -3,7 +3,7 @@
 <div class="row">
     <div class="col-md-12">
         <div class="col-md-3">
-            <img class="img-rounded user--img" src="http://placehold.it/150x150" alt="user-image">
+            <img class="img-rounded user--img" :src="avatar" alt="user-image">
             <form method="post" action="avatars" enctype="multipart/form-data"
              v-on:submit="uploadImage($event)">
                 <input class="btn btn-default btn-file" type="file" name="avatar" id="avatar"></input>
@@ -12,12 +12,12 @@
         </div>
         <div class="col-md-3">
             <h4>Full name:</h4>
-            <div v-show="edit.name" class="edit--block">                
+            <div v-show="edit.name" class="edit--block">
                 <input class="form-control" type="text"
                  id="name"
                  v-on:keyup.enter="updateRecord($event)"
                  v-model="name"
-                 v-validate="name" 
+                 v-validate="name"
                  data-vv-rules="required|name_length" >
                 <i class="fa fa-times" aria-hidden="true"
                 @click="editClick('name')"></i>
@@ -30,12 +30,12 @@
         </div>
         <div class="col-md-3">
             <h4>Email</h4>
-            <div v-show="edit.email" class="edit--block" :class="{'has-error': errors.has('email') }">                
+            <div v-show="edit.email" class="edit--block" :class="{'has-error': errors.has('email') }">
                 <input class="form-control" type="text"
                  id="email"
                  v-on:keyup.enter="updateRecord($event)"
                  v-model="email"
-                 v-validate="email" 
+                 v-validate="email"
                  data-vv-rules="required|email" >
                 <i class="fa fa-times" aria-hidden="true"
                 @click="editClick('email')"></i>
@@ -48,12 +48,12 @@
         </div>
         <div class="col-md-3">
             <h4>Login</h4>
-            <div v-show="edit.login" class="edit--block">                
+            <div v-show="edit.login" class="edit--block">
                 <input class="form-control" type="text"
                  id="login"
                  v-on:keyup.enter="updateRecord($event)"
                  v-model="login"
-                 v-validate="login" 
+                 v-validate="login"
                  data-vv-rules="required|login_length" >
                 <i class="fa fa-times" aria-hidden="true"
                 @click="editClick('login')"></i>
@@ -99,10 +99,10 @@ axios.defaults.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[nam
         },
         data() {
             return {
-                avatar: '',
                 name: this.user.name,
                 email: this.user.email,
                 login: this.user.username,
+                avatar: this.user.avatar ? `/img/avatars/${this.user.avatar}` : 'http://placehold.it/150x150',
                 edit: {
                     name: false,
                     email: false,
@@ -122,7 +122,7 @@ axios.defaults.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[nam
 
                 axios.post('/avatars', data)
                 .then((response) => {
-                    console.log(response);
+                    console.log(response.statusText);
                 }).catch((errors) => {
                     console.log(errors);
                 })

@@ -15695,10 +15695,10 @@ VeeValidate.Validator.extend('login_length', {
     },
     data: function data() {
         return {
-            avatar: '',
             name: this.user.name,
             email: this.user.email,
             login: this.user.username,
+            avatar: this.user.avatar ? '/img/avatars/' + this.user.avatar : 'http://placehold.it/150x150',
             edit: {
                 name: false,
                 email: false,
@@ -15718,7 +15718,7 @@ VeeValidate.Validator.extend('login_length', {
             data.append('avatar', document.getElementById('avatar').files[0]);
 
             axios.post('/avatars', data).then(function (response) {
-                console.log(response);
+                console.log(response.statusText);
             }).catch(function (errors) {
                 console.log(errors);
             });
@@ -35294,7 +35294,7 @@ var Component = __webpack_require__(36)(
   /* cssModules */
   null
 )
-Component.options.__file = "/home/artem/Development/Social-feed/resources/assets/js/components/Profile.vue"
+Component.options.__file = "/home/artem/Development/social/resources/assets/js/components/Profile.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Profile.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -35305,9 +35305,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-5c1d69da", Component.options)
+    hotAPI.createRecord("data-v-babab910", Component.options)
   } else {
-    hotAPI.reload("data-v-5c1d69da", Component.options)
+    hotAPI.reload("data-v-babab910", Component.options)
   }
 })()}
 
@@ -35381,7 +35381,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('img', {
     staticClass: "img-rounded user--img",
     attrs: {
-      "src": "http://placehold.it/150x150",
+      "src": _vm.avatar,
       "alt": "user-image"
     }
   }), _vm._v(" "), _c('form', {
@@ -35629,7 +35629,7 @@ module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-5c1d69da", module.exports)
+     require("vue-hot-reload-api").rerender("data-v-babab910", module.exports)
   }
 }
 
